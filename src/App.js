@@ -1,25 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
+import LoginPage from './screens/login';
+import DashboardPage from './screens/dashboard';
+import BoardPage from './screens/board';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  BrowserRouter as Router,
+  Switch, 
+  Route 
+} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="fixed-header">
+        <div className="container">
+          <nav>
+            <a href="/">Trello</a>
+          </nav>
+          </div>
+        </div>
+      <div className="container">
+        
+        <Router>
+          <Switch>
+            <Route exact path="/" component={ LoginPage }/>
+            <Route exact path="/home" component={DashboardPage} />
+            <Route path="/home/:boardId" component={BoardPage} />
+          </Switch>
+        </Router>
+      </div>    
+      <div className="fixed-footer">
+        <div className="container">Copyright &copy; Impressico</div>        
+      </div>
     </div>
-  );
+    );
 }
 
 export default App;
