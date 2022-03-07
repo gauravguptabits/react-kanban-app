@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import { Row, Col, ListGroup } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getUserAction } from "../actions/userAction";
 import { withRouter } from "react-router";
-import { BoardCard } from '../components/board';
+import { Board } from '../components/board';
+import { lightColors, darkColors , Button, Link } from 'react-floating-action-button'
 
 class DashboardPage extends React.Component {
 
@@ -11,22 +12,14 @@ class DashboardPage extends React.Component {
         super(props);
         this.state = {
             boards: [
-                { name: 'Project-A', collectionCount: 5, cardCount: 3, createdOn: new Date() },
-                { name: 'Project-B', collectionCount: 5, cardCount: 3, createdOn: new Date() },
-                { name: 'Project-C', collectionCount: 5, cardCount: 3, createdOn: new Date() },
+                { name: 'Hirings', summary: 'To get a view of where we are placed in hiring at the moment.', collectionCount: 5, cardCount: 3, createdOn: new Date() },
+                { name: 'Leads', summary: 'To get a view of where we are placed in lead management process at the moment.', collectionCount: 5, cardCount: 3, createdOn: new Date() },
+                { name: 'About Me', summary: 'To describe more about this excercise.', collectionCount: 5, cardCount: 3, createdOn: new Date() },
             ]
         }
     }
 
-
-    componentDidMount() {
-    }
-
     onEnterAsGuestClicked = (event) => {
-    };
-
-    componentWillReceiveProps(nextProps) {
-       
     };
 
     onBoardClicked = (e, board) => {
@@ -36,11 +29,24 @@ class DashboardPage extends React.Component {
 
     render() {
         return (
-            <Row>
-                {
-                    this.state.boards.map(b => <BoardCard board={b} onBoardClicked={this.onBoardClicked}/>)
-                }
-            </Row>
+            <div>
+                <ListGroup horizontal variant='flush'>
+                    {
+                        this.state.boards.map(b => 
+                            <ListGroup.Item>
+                                <Board board={b} onBoardClicked={this.onBoardClicked} />
+                            </ListGroup.Item>
+                        )
+                    }
+                </ListGroup>
+                <Button
+                    tooltip="Click to create a new board."
+                    icon="fas fa-plus"
+                    rotate={true}
+                    onClick={() => alert('Implement Create board API.')} >
+                +
+                </Button>
+            </div>
         )
     }
 }

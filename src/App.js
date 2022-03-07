@@ -3,6 +3,7 @@ import './App.css';
 import LoginPage from './screens/login';
 import DashboardPage from './screens/dashboard';
 import BoardPage from './screens/board';
+import { AppHeader } from './components/header';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -14,15 +15,8 @@ import {
 function App() {
   return (
     <div>
-      <div className="fixed-header">
-        <div className="container">
-          <nav>
-            <a href="/">Trello</a>
-          </nav>
-          </div>
-        </div>
+      <AppHeader/>
       <div className="container">
-        
         <Router>
           <Switch>
             <Route exact path="/" component={ LoginPage }/>

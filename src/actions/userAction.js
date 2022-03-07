@@ -2,6 +2,7 @@ import axios from 'axios';
 import { UserActions } from '../actionConstant';
 import login from '../screens/login';
 
+const API_HOST ='https://jsonplaceholder.typicode.com/todos/1'
 
 export const getUserAction = (user) => {
     return (dispatch) => {
