@@ -10,9 +10,12 @@ const userInitialState = {
     }
 }
 
-const userReducer = (state = userInitialState, action = {type: ''}) => {
-    let new_state = { ...state };
-    switch(action.type){
+const userReducer = (state = userInitialState, action = { type: '' }) => {
+    // console.log("action data-----", action)
+    let new_state = {
+        ...state
+    };
+    switch (action.type) {
         case UserActions.GUEST_LOGIN_REQUEST:
             new_state.isAuthenticated = false;
             new_state.isLoading = true;
@@ -31,6 +34,18 @@ const userReducer = (state = userInitialState, action = {type: ''}) => {
                 hasError: false
             }
             break;
+            case UserActions.LOGIN_SUCCESS:
+                new_state.isAuthenticated = true;
+                // new_state.name = action.data.name;
+                new_state.isLoading = false;
+                new_state.token = action.data.token;
+                new_state.error = {
+                    errorMsg: '',
+                    hasError: false
+                }
+                localStorage.setItem("token",action.data.token)
+            break;
+
         case UserActions.GUEST_LOGIN_FAILURE:
             new_state.isAuthenticated = false;
             new_state.isLoading = false;
