@@ -1,21 +1,19 @@
 import React from "react";
 import { Row, Col, ListGroup } from "react-bootstrap";
+import Spinner from 'react-bootstrap/Spinner'
+import SweetAlert from 'react-bootstrap-sweetalert';
 import { connect } from "react-redux";
-import { getUserAction } from "../actions/userAction";
+// import {AddDashboard } from "../actions/userAction";
 import { withRouter } from "react-router";
 import { Board } from '../components/board';
-import { lightColors, darkColors , Button, Link } from 'react-floating-action-button'
+import { lightColors, darkColors, Button, Link } from 'react-floating-action-button'
 
 class DashboardPage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            boards: [
-                { name: 'Hirings', summary: 'To get a view of where we are placed in hiring at the moment.', collectionCount: 5, cardCount: 3, createdOn: new Date() },
-                { name: 'Leads', summary: 'To get a view of where we are placed in lead management process at the moment.', collectionCount: 5, cardCount: 3, createdOn: new Date() },
-                { name: 'About Me', summary: 'To describe more about this excercise.', collectionCount: 5, cardCount: 3, createdOn: new Date() },
-            ]
+            boards: []
         }
     }
 
@@ -28,24 +26,38 @@ class DashboardPage extends React.Component {
     };
 
     render() {
+        const dData = this.props.dashboard.dashboardData;
+        const isLoading = this.props.dashboard.isLoading;
+        // console.log("api data....$$$$$....",this.props.dashboard.isLoading)
         return (
             <div>
+                <center style={{ 'marginTop': '30px' }}>  {
+                    isLoading ?
+                        <div><Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner></div> : null
+                }</center>
+
+
                 <ListGroup horizontal variant='flush'>
                     {
-                        this.state.boards.map(b => 
+                        dData &&
+                        dData.map(b =>
                             <ListGroup.Item>
                                 <Board board={b} onBoardClicked={this.onBoardClicked} />
                             </ListGroup.Item>
                         )
                     }
+
                 </ListGroup>
                 <Button
                     tooltip="Click to create a new board."
                     icon="fas fa-plus"
                     rotate={true}
                     onClick={() => alert('Implement Create board API.')} >
-                +
+                    +
                 </Button>
+            
             </div>
         )
     }
@@ -53,9 +65,12 @@ class DashboardPage extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.user,
+        dashboard: state.dashboardReducer
     }
 };
 
 
-export default connect(mapStateToProps, { getUserAction })(withRouter(DashboardPage));
+export default connect(mapStateToProps, 
+    // {AddDashboard }
+    )(withRouter(DashboardPage));

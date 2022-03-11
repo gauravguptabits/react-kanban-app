@@ -29,6 +29,7 @@
     .container p{
         line-height: 30px; /* Create scrollbar to test positioning */
     }
+    
 
 @media all and (min-width: 480px) {
   .Login {

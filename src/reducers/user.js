@@ -11,7 +11,6 @@ const userInitialState = {
 }
 
 const userReducer = (state = userInitialState, action = { type: '' }) => {
-    // console.log("action data-----", action)
     let new_state = {
         ...state
     };
@@ -25,25 +24,16 @@ const userReducer = (state = userInitialState, action = { type: '' }) => {
             }
             // API call
             break;
-        case UserActions.GUEST_LOGIN_SUCCESS:
+        case UserActions.LOGIN_SUCCESS:
             new_state.isAuthenticated = true;
             new_state.name = action.data.name;
             new_state.isLoading = false;
+            new_state.token = action.data.access;
             new_state.error = {
                 errorMsg: '',
                 hasError: false
             }
-            break;
-            case UserActions.LOGIN_SUCCESS:
-                new_state.isAuthenticated = true;
-                // new_state.name = action.data.name;
-                new_state.isLoading = false;
-                new_state.token = action.data.token;
-                new_state.error = {
-                    errorMsg: '',
-                    hasError: false
-                }
-                localStorage.setItem("token",action.data.token)
+            localStorage.setItem("token", action.data.access)
             break;
 
         case UserActions.GUEST_LOGIN_FAILURE:
