@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Row, Col, Form } from "react-bootstrap";
+import Spinner from 'react-bootstrap/Spinner'
 import { connect } from "react-redux";
-import { getUserAction, loginAction } from "../actions/userAction";
+import {loginAction } from "../actions/userAction";
+import { getDashboardAction } from "../actions/dashboardAction"
 import { withRouter } from "react-router";
 
 class LandingPage extends React.Component {
@@ -13,20 +15,16 @@ class LandingPage extends React.Component {
             user: props.user
         }
         this.ticker = null;
+        // console.log("props data ",props)
     }
-    
+
     updateDateTime = () => {
         this.setState(prevState => ({ ...prevState, date: new Date() }))
     };
 
-    // componentDidMount() {
-    //     this.ticker = setInterval(() => this.updateDateTime(), 1000);
-    // }
-
-    onEnterAsGuestClicked = (event) => {
-        const data = { name: 'Guest' };
-        this.props.getUserAction(data)
-    };
+    componentDidMount() {
+        this.ticker = setInterval(() => this.updateDateTime(), 1000);
+    }
 
     login = () => {
         this.props.loginAction(this.state.user.username, this.state.user.password);
@@ -38,23 +36,32 @@ class LandingPage extends React.Component {
             clearInterval(this.ticker);
             // let naviagte = useNavigate();
             // naviagte("/home")
+            this.props.getDashboardAction();
             nextProps.history.push('/home');
             // window.location.href='/home'
-        }else{
+        } else {
             // update this page.
-            console.log("err",nextProps.user.error.errorMsg)
+            // console.log("err",nextProps.user.error.errorMsg)
             this.setState({ user: nextProps.user });
         }
     }
     render() {
-    // console.log(this.props.user.error)
-    const showError = this.props.user.error.hasError
-    console.log(showError)
+        // console.log(this.props.user.error)
+        const showError = this.props.user.error.hasError
+        const isLoading = this.props.user.isLoading
+        // console.log(showError)
         return (<div>
-             {showError == true? 
-             <center style={{color:'red'}}>something went wrong please try again</center> 
-             :null}
-            <div className="Login">  
+            <center style={{ 'marginTop': '30px' }}>  {
+                isLoading ?
+                    <div><Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner></div> : null
+            }</center>
+
+            {showError == true ?
+                <center style={{ color: 'red' }}>something went wrong please try again</center>
+                : null}
+            <div className="Login">
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Enter UserName</Form.Label>
@@ -99,4 +106,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(mapStateToProps, { getUserAction, loginAction })(withRouter(LandingPage));
+export default connect(mapStateToProps,
+    {loginAction, getDashboardAction, })(withRouter(LandingPage));

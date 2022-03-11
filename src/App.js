@@ -3,8 +3,7 @@ import './App.css';
 import LoginPage from './screens/login';
 import DashboardPage from './screens/dashboard';
 import BoardPage from './screens/board';
-import { AppHeader } from './components/header';
-
+import  AppHeader  from './components/header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
