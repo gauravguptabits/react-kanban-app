@@ -7,14 +7,13 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Board } from '../components/board';
 import { lightColors, darkColors, Button, Link } from 'react-floating-action-button'
+import { NavLink } from 'react-router-dom'
+import { getDashboardAction } from "../actions/dashboardAction"
 
 class DashboardPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            boards: []
-        }
     }
 
     onEnterAsGuestClicked = (event) => {
@@ -25,8 +24,14 @@ class DashboardPage extends React.Component {
         this.props.history.push(`/home/${board.name}`);
     };
 
+    // constructor ==> render ==> componentDidMount ==> API ==> Reducer ==> render
+    componentDidMount = () => {
+        this.props.getDashboardAction();
+    }
+
     render() {
         const dData = this.props.dashboard.dashboardData;
+        // console.log("dDATA",this.props)
         const isLoading = this.props.dashboard.isLoading;
         // console.log("api data....$$$$$....",this.props.dashboard.isLoading)
         return (
@@ -39,7 +44,7 @@ class DashboardPage extends React.Component {
                 }</center>
 
 
-                <ListGroup horizontal variant='flush'>
+                <ListGroup variant='flush'>
                     {
                         dData &&
                         dData.map(b =>
@@ -50,14 +55,15 @@ class DashboardPage extends React.Component {
                     }
 
                 </ListGroup>
-                <Button
+
+                <NavLink exact to="/addBoard">  <Button
                     tooltip="Click to create a new board."
                     icon="fas fa-plus"
                     rotate={true}
-                    onClick={() => alert('Implement Create board API.')} >
+                >
                     +
-                </Button>
-            
+                </Button></NavLink>
+
             </div>
         )
     }
@@ -71,6 +77,6 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, 
-    // {AddDashboard }
-    )(withRouter(DashboardPage));
+export default connect(mapStateToProps,
+    {getDashboardAction }
+)(withRouter(DashboardPage));
