@@ -36,7 +36,6 @@ class LandingPage extends React.Component {
             clearInterval(this.ticker);
             // let naviagte = useNavigate();
             // naviagte("/home")
-            this.props.getDashboardAction();
             nextProps.history.push('/home');
             // window.location.href='/home'
         } else {
