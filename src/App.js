@@ -2,6 +2,7 @@ import './App.css';
 import LoginPage from './screens/login';
 import DashboardPage from './screens/dashboard';
 import BoardPage from './screens/board';
+import CollectionPage from './screens/collection';
 import  AppHeader  from './components/header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddBoard from './screens/AddBoard'
@@ -20,7 +21,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={ LoginPage }/>
             <Route exact path="/home" component={DashboardPage} />
-            <Route path="/home/:boardId" component={BoardPage} />
+            {/* <Route path="/home/:boardId" component={BoardPage} /> */}
+            <Route path="/home/:boardId" component={CollectionPage} />
             <Route path="/addBoard" component={AddBoard} />
           </Switch>
         </Router>
