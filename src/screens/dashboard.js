@@ -20,8 +20,9 @@ class DashboardPage extends React.Component {
     };
 
     onBoardClicked = (e, board) => {
-        console.log('OnBoardClicked', e);
-        this.props.history.push(`/home/${board.name}`);
+        
+        console.log('OnBoardClicked', e, board);
+        this.props.history.push(`/home/${board.id}`);
     };
 
     // constructor ==> render ==> componentDidMount ==> API ==> Reducer ==> render

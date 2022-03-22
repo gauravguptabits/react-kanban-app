@@ -23,7 +23,12 @@ class CollectionPage extends React.Component {
 
     // constructor ==> render ==> componentDidMount ==> API ==> Reducer ==> render
     componentDidMount = () => {
-        this.props.getCollectionAction();
+        // const board_id = 1
+        // TODO : get board id from url
+        // 
+        const board_id = this.props.match.params.boardId
+        console.log('board id===========', board_id)
+        this.props.getCollectionAction(board_id);
     }
 
     render () {
