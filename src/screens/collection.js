@@ -4,6 +4,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import { withRouter } from "react-router";
 import { Stack, ListGroup } from 'react-bootstrap';
 import { NewCollection } from '../components/newcollection';
+import { Collection } from '../components/collection';
 import { getCollectionAction } from "../actions/collectionAction"
 
 class CollectionPage extends React.Component {
@@ -44,7 +45,8 @@ class CollectionPage extends React.Component {
                         collectionData &&
                         collectionData.map(col =>
                             <ListGroup.Item>
-                                <NewCollection collection={col} />
+                                {/* <NewCollection collection={col} /> */}
+                                <Collection collection={col} />
                             </ListGroup.Item>
                         )
                     }

@@ -9,8 +9,9 @@ export const getCollectionAction = (board_id) => {
         dispatch({ type: CollectionAction.COLLECTION_REQUEST });
         const token = localStorage.getItem("token")
         // Prod url https://django-kanbanapp.herokuapp.com
-        // Dev urlhttp://127.0.0.1:8000
+        // Dev url http://127.0.0.1:8000
 
+        
         return axios.get('https://django-kanbanapp.herokuapp.com/collections/',{
             headers: {
                 Authorization: "Bearer " + token
