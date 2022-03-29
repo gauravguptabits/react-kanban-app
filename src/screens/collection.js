@@ -5,20 +5,23 @@ import { withRouter } from "react-router";
 import { Stack, ListGroup } from 'react-bootstrap';
 import { NewCollection } from '../components/newcollection';
 import { Collection } from '../components/collection';
+import {searchCollectionAction } from "../actions/searchAction";
 import { getCollectionAction } from "../actions/collectionAction"
 
 class CollectionPage extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            collections: [
-                { name: 'Ideas', "created_at": "2022-03-14T09:41:29.652825Z"},
-                { name: 'Generate Leads', "created_at": "2022-03-14T09:41:29.652825Z" },
-                { name: 'Active Leads', "created_at": "2022-03-14T09:41:29.652825Z"},
-                { name: 'InActive Leads', "created_at": "2022-03-14T09:41:29.652825Z" },
-            ],
-            name: 'Sales Pipelines',
-            created_at: new Date()
+            // collections: [
+            //     { name: 'Ideas', "created_at": "2022-03-14T09:41:29.652825Z"},
+            //     { name: 'Generate Leads', "created_at": "2022-03-14T09:41:29.652825Z" },
+            //     { name: 'Active Leads', "created_at": "2022-03-14T09:41:29.652825Z"},
+            //     { name: 'InActive Leads', "created_at": "2022-03-14T09:41:29.652825Z" },
+            // ],
+            // name: 'Sales Pipelines',
+            // created_at: new Date(),
+            search_query: ""
         }
     }
 
@@ -28,8 +31,17 @@ class CollectionPage extends React.Component {
         // TODO : get board id from url
         // 
         const board_id = this.props.match.params.boardId
-        console.log('board id===========', board_id)
+        console.log('board id===', board_id)
         this.props.getCollectionAction(board_id);
+    }
+
+    onSearchValueChange = (e) => {
+        this.setState({search_query: e.target.value})
+    }
+    searchTask = () => {
+        console.log('searchTask Button change', this.state.search_query)
+        const board_id = this.props.match.params.boardId
+        this.props.searchCollectionAction(board_id, this.state.search_query);
     }
 
     render () {
@@ -38,7 +50,9 @@ class CollectionPage extends React.Component {
         const isLoading = this.props.collection.isLoading;
         return (
             <div>
-                {/* <h1> {this.name} </h1> */}
+                <h1> Harsh </h1>
+                <input onChange={(e) => {this.onSearchValueChange(e)}}/>
+                <button onClick={() => {this.searchTask()}}>Search</button>
                 <ListGroup horizontal >
                     {
                         // this.state.collections.map(col =>
@@ -65,5 +79,5 @@ const mapStateToProps = state => {
 // export default CollectionPage;
 
 export default connect(mapStateToProps,
-    { getCollectionAction }
+    { getCollectionAction, searchCollectionAction }
 )(withRouter(CollectionPage));
